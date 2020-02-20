@@ -1,5 +1,17 @@
 """ Tests for the Processing API requests
 """
+
+import logging
+from zmq.log.handlers import PUBHandler
+
+handler = PUBHandler('tcp://*:12347')
+handler.root_topic = 'rate_limit_logs'
+
+logging.getLogger("sentinelhub.download.sentinelhub_client").setLevel(logging.DEBUG)
+logging.getLogger("sentinelhub.download.sentinelhub_client").addHandler(handler)
+logging.getLogger("sentinelhub.sentinelhub_rate_limit").setLevel(logging.DEBUG)
+logging.getLogger("sentinelhub.sentinelhub_rate_limit").addHandler(handler)
+
 import unittest
 import numpy as np
 
